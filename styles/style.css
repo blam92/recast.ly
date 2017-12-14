@@ -84,6 +84,39 @@ body {
   padding-left: 20px;
 }
 
+.like-dislike {
+  float: right;
+}
+
+.view-count {
+  float: left;
+}
+
+.video-statistics {
+  padding: 20px 10px 70px 10px;
+}
+
+#thumbup, #thumbdown {
+  padding: 0 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.view-count {
+  font-size: 1.3rem;
+}
+
+#thumbup {
+  color: green;
+}
+
+like-dislike img {
+  position: absolute;
+}
+
+#thumbdown {
+  color: red;
+}
 h5 {
   border: 2px solid red;
   text-align: center;

@@ -4,7 +4,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       'currentVideo': window.exampleVideoData[0],
-      'videoList': window.exampleVideoData
+      'videoList': window.exampleVideoData,
+      'statistics': {}
     };
   }
 
@@ -13,13 +14,12 @@ class App extends React.Component {
     this.searchYouTube = _.debounce(this.searchYouTube, 500);
   }
 
-  playSelectedVideo(event, videoId) {
-    let clickIndex = videoId.slice(-1);
-    
+  playSelectedVideo(videoId, event, videoKey) {
+    let clickIndex = videoKey.slice(-1);
+    this.getStats(videoId);
     this.setState({
       'currentVideo': this.state.videoList[clickIndex]
     });
-    
   }
 
   searchYouTube(query = 'Hack Reactor') {
@@ -29,12 +29,23 @@ class App extends React.Component {
       'maxResults': 5,
       'part': 'snippet',
       'type': 'video',
-      'videoEmbeddable': true
+      'videoEmbeddable': true,
     }, returnData => {
       this.setState({'videoList': returnData.items, 'currentVideo': returnData.items[0]});
+      this.getStats(returnData.items[0].id.videoId);
     });
   }
 
+  getStats(videoId) {
+    $.get('https:www.googleapis.com/youtube/v3/videos', {
+      'key': window.YOUTUBE_API_KEY,
+      'part': 'statistics',
+      'id': videoId
+    }, returnData => {
+      var videoStats = returnData.items[0].statistics;
+      this.setState({'statistics': {'viewCount': videoStats.viewCount, 'likes': videoStats.likeCount, 'dislikes': videoStats.dislikeCount}});
+    }); 
+  }
 
   render() {
     return (  
@@ -49,7 +60,7 @@ class App extends React.Component {
         <div className="row">
           <div className="col-md-7">
             <div>
-              <VideoPlayer video={this.state.currentVideo}/>
+              <VideoPlayer statistics={this.state.statistics} video={this.state.currentVideo}/>
             </div>
           </div>
           <div className="col-md-5">
