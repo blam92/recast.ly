@@ -10,6 +10,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.searchYouTube();
+    this.searchYouTube = _.debounce(this.searchYouTube, 500);
   }
 
   playSelectedVideo(event, videoId) {
