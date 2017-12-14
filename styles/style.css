@@ -128,22 +128,23 @@ like-dislike img {
 }
 
 .channel-statistics {
-  padding-bottom: 100px;
+  padding-bottom: 10px;
 }
 
 .channel-statistics img {
   border-radius: 50%;
 }
 
-.channel-thumbnail {  
+.channel-thumbnail { 
+  float: left; 
   border-radius: 50%;
   margin-bottom: 30px;
 }
 
 .channel-title {
-  position: absolute;
-  left: 140px;
-  top: 630px;
+  float:left;
+  margin-left: 30px;
+  margin-top: 30px;
   font-weight: bold;
 }
 
@@ -153,10 +154,11 @@ like-dislike img {
 
 .sub-container {
   float: right;
+  padding: 29px;
 }
 
 .ch-info-container {
-  float: left;
+  
 }
 
 .channel-description {

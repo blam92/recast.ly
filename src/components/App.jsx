@@ -38,7 +38,7 @@ class App extends React.Component {
       var videoStats = returnData.items[0].statistics;
       var videoObj = {'viewCount': videoStats.viewCount, 'likes': videoStats.likeCount, 'dislikes': videoStats.dislikeCount};
       searchYouTubeChannel(channelId, videoObj, this.setState.bind(this));
-      // this.setState({'statistics': {'viewCount': videoStats.viewCount, 'likes': videoStats.likeCount, 'dislikes': videoStats.dislikeCount}});
+      
     }); 
   }
 
