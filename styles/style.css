@@ -2,6 +2,7 @@
 
 body {
   background: #f1f1f1;
+  font-family: Roboto, Arial;
 }
 
 .navbar {
@@ -39,6 +40,14 @@ body {
 
 .video-player {
   margin-left: 20px;
+}
+
+.video-player {
+  font-size: 0.9rem; 
+}
+
+.video-player h3 {
+  font-size: 1.3rem;
 }
 
 .video-player-details {
@@ -117,6 +126,43 @@ like-dislike img {
 #thumbdown {
   color: red;
 }
+
+.channel-statistics {
+  padding-bottom: 100px;
+}
+
+.channel-statistics img {
+  border-radius: 50%;
+}
+
+.channel-thumbnail {  
+  border-radius: 50%;
+  margin-bottom: 30px;
+}
+
+.channel-title {
+  position: absolute;
+  left: 140px;
+  top: 630px;
+  font-weight: bold;
+}
+
+.channel-subs {
+  vertical-align: center;
+}
+
+.sub-container {
+  float: right;
+}
+
+.ch-info-container {
+  float: left;
+}
+
+.channel-description {
+  clear: both;
+}
+
 h5 {
   border: 2px solid red;
   text-align: center;

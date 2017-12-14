@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
+    "start": "npm install & npm install -g live-server & npm install -g babel-cli & babel . --out-dir compiled --presets=es2015,react --ignore=node_modules,compiled --source-maps inline -w",
     "test": "live-server --open=./SpecRunner.html --port=8081",
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash"
   },
@@ -15,6 +16,8 @@
     "lodash": "^4.6.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "underscore": "1.8.3"
   },
   "devDependencies": {

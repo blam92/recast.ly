@@ -3,7 +3,8 @@ var Search = (props) => {
   let onSearch = (event) => {
     if (event.type === 'click' || event.type === 'keypress' && event.key === 'Enter') {
       let query = document.getElementsByClassName('form-control')[0].value;
-      props.searchFn(query);
+      // searchYouTube.bind(null, query, props.searchFn);
+      searchYouTube(query, props.searchFn);
     }
   };
   

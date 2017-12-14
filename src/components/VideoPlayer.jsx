@@ -8,6 +8,7 @@ var VideoPlayer = (props) => (
       <div>{props.video.snippet.description}</div>
       <hr/>
       <VideoDetails statistics={props.statistics} />
+      <ChannelDetails statistics={props.statistics} />
     </div>
   </div>
 );

@@ -7,43 +7,38 @@ class App extends React.Component {
       'videoList': window.exampleVideoData,
       'statistics': {}
     };
+    this.searchYouTubeCallback = this.searchYouTubeCallback.bind(this);
   }
-
+  
   componentDidMount() {
-    this.searchYouTube();
-    this.searchYouTube = _.debounce(this.searchYouTube, 500);
+    searchYouTube = _.debounce(searchYouTube, 500);
+    searchYouTube('Hack Reactor', this.searchYouTubeCallback);
   }
 
-  playSelectedVideo(videoId, event, videoKey) {
+  playSelectedVideo(videoId, channelId, event, videoKey) {
+    console.log(arguments);
     let clickIndex = videoKey.slice(-1);
-    this.getStats(videoId);
+    this.getStats(videoId, channelId);
     this.setState({
       'currentVideo': this.state.videoList[clickIndex]
     });
   }
 
-  searchYouTube(query = 'Hack Reactor') {
-    $.get('https://www.googleapis.com/youtube/v3/search', {
-      'key': window.YOUTUBE_API_KEY,
-      'q': query,
-      'maxResults': 5,
-      'part': 'snippet',
-      'type': 'video',
-      'videoEmbeddable': true,
-    }, returnData => {
-      this.setState({'videoList': returnData.items, 'currentVideo': returnData.items[0]});
-      this.getStats(returnData.items[0].id.videoId);
-    });
+  searchYouTubeCallback(returnData) {
+    this.setState({'videoList': returnData.items, 'currentVideo': returnData.items[0]});
+    this.getStats(returnData.items[0].id.videoId, returnData.items[0].snippet.channelId);
   }
 
-  getStats(videoId) {
+  getStats(videoId, channelId) {
     $.get('https:www.googleapis.com/youtube/v3/videos', {
       'key': window.YOUTUBE_API_KEY,
       'part': 'statistics',
       'id': videoId
     }, returnData => {
       var videoStats = returnData.items[0].statistics;
-      this.setState({'statistics': {'viewCount': videoStats.viewCount, 'likes': videoStats.likeCount, 'dislikes': videoStats.dislikeCount}});
+      var videoObj = {'viewCount': videoStats.viewCount, 'likes': videoStats.likeCount, 'dislikes': videoStats.dislikeCount};
+      searchYouTubeChannel(channelId, videoObj, this.setState.bind(this));
+      // this.setState({'statistics': {'viewCount': videoStats.viewCount, 'likes': videoStats.likeCount, 'dislikes': videoStats.dislikeCount}});
     }); 
   }
 
@@ -53,7 +48,7 @@ class App extends React.Component {
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
             <div>
-              <Search searchFn={this.searchYouTube.bind(this)}/>
+              <Search searchFn={this.searchYouTubeCallback}/>
             </div>
           </div>
         </nav>
