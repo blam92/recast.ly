@@ -8,21 +8,41 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.searchYouTube();
+  }
+
   playSelectedVideo(event, videoId) {
     let clickIndex = videoId.slice(-1);
     
     this.setState({
-      'currentVideo': window.exampleVideoData[clickIndex]
+      'currentVideo': this.state.videoList[clickIndex]
     });
-    // console.log(videoId.slice(-1));
+    
   }
+
+  searchYouTube(query = 'Hack Reactor') {
+    $.get('https://www.googleapis.com/youtube/v3/search', {
+      'key': window.YOUTUBE_API_KEY,
+      'q': query,
+      'maxResults': 5,
+      'part': 'snippet',
+      'type': 'video',
+      'videoEmbeddable': true
+    }, returnData => {
+      this.setState({'videoList': returnData.items, 'currentVideo': returnData.items[0]});
+    });
+  }
+
 
   render() {
     return (  
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view should go here</h5></div>
+            <div>
+              <Search searchFn={this.searchYouTube.bind(this)}/>
+            </div>
           </div>
         </nav>
         <div className="row">
