@@ -1,15 +1,17 @@
 var Search = (props) => {
   
   let onSearch = (event) => {
-    if (event.type === 'click' || event.type === 'keypress') {
-      let query = document.getElementsByClassName('form-control')[0].value;
-      // searchYouTube.bind(null, query, props.searchFn);
+    if (event.type === 'click' || event.type === 'keypress' && event.key === 'Enter') {
+      // let query = document.getElementsByClassName('form-control')[0].value;
+      
+      let query = $('.tt-input').typeahead('val');
+      console.log(query);
       searchYouTube(query, props.searchFn);
     }
   };
   
   return (<div className="search-bar form-inline">
-    <input className="form-control" onKeyPress={onSearch} type="text" />
+    <input className="form-control typeahead" onKeyPress={onSearch} type="text" />
     <button onClick={onSearch} className="btn hidden-sm-down">
       <span className="glyphicon glyphicon-search"></span>
     </button>

@@ -13,10 +13,37 @@ class App extends React.Component {
   componentDidMount() {
     searchYouTube = _.debounce(searchYouTube, 500);
     searchYouTube('Hack Reactor', this.searchYouTubeCallback);
+    var videos = new Bloodhound({
+      datumTokenizer: function(datum) {
+        return Bloodhound.tokenizers.whitespace(datum.value);
+      },
+      
+      //https://www.googleapis.com/youtube/v3/search?key=AIzaSyC7sAs-AEskPhK4O552uRNb9atmbMW_EQs&q=%QUERY&maxResults=5&part=snippet&type=video&videoEmbeddable=true
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: {
+        wildcard: '%QUERY',
+        url: 'https://www.googleapis.com/youtube/v3/search?key=AIzaSyC7sAs-AEskPhK4O552uRNb9atmbMW_EQs&q=%QUERY&maxResults=5&part=snippet&type=video&videoEmbeddable=true',
+        transform: function(response) {
+          // Map the remote source JSON array to a JavaScript object array
+          return $.map(response.items, function(video) {
+            console.log(video.snippet.title);
+            return {
+              value: video.snippet.title.slice(5);
+            };
+          });
+        }
+      }
+    });
+
+    // Instantiate the Typeahead UI
+    $('.typeahead').typeahead(null, {
+      display: 'value',
+      source: videos,
+      minLength: 4
+    });
   }
 
   playSelectedVideo(videoId, channelId, event, videoKey) {
-    console.log(arguments);
     let clickIndex = videoKey.slice(-1);
     this.getStats(videoId, channelId);
     this.setState({

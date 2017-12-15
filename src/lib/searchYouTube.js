@@ -13,7 +13,6 @@ var searchYouTube = (query, callback) => {
 
 window.searchYouTube = searchYouTube;
 
-
 var searchYouTubeChannel = (channelId, videoObj, callback) => {
   $.get('https:www.googleapis.com/youtube/v3/channels', {
     'key': window.YOUTUBE_API_KEY,
